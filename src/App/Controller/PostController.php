@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
+    /**
+     * @Route("/post", name="app_post_index")
+     */
     public function index(PostRepository $postRepository): Response
     {
         $posts = $postRepository->findBy([], ['id' => 'desc'], 100);

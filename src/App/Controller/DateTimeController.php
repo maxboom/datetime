@@ -26,7 +26,7 @@ class DateTimeController extends AbstractController
     }
 
     /**
-     * @Route("/", name="app_datetime_create", methods={"GET"})
+     * @Route("/datetime", name="app_datetime_create", methods={"GET"})
      */
     public function create(): Response
     {
@@ -38,7 +38,7 @@ class DateTimeController extends AbstractController
     }
 
     /**
-     * @Route("/", name="app_datetime_save", methods={"POST"})
+     * @Route("/datetime", name="app_datetime_save", methods={"POST"})
      */
     public function save(Request $request): Response
     {
@@ -62,7 +62,7 @@ class DateTimeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_datetime_show", methods={"GET"})
+     * @Route("/datetime/{id}", name="app_datetime_show", methods={"GET"})
      *
      * @throws Exception
      */
