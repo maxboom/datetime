@@ -76,9 +76,7 @@ class DateTimeController extends AbstractController
         $utcDate = new BaseDateTime('now', $utcTimeZone);
         $date = new BaseDateTime('now noon', $timezone);
 
-        // another variant of different
-        // $differentInSeconds = $utcDate->getOffset() -  $date->getOffset();
-        $differentInSeconds = $utcDate->getTimestamp() - ($date->getTimestamp() + $date->getOffset());
+        $differentInSeconds = $date->getOffset() - $utcDate->getOffset();
 
         $differentInMinutes = intdiv($differentInSeconds, 60);
 
@@ -90,7 +88,7 @@ class DateTimeController extends AbstractController
 
         return $this->render('date_time/show.html.twig', [
             'timezone' => $dateTime->getTimezone(),
-            'differentInMinutes' => $differentInMinutes,
+            'differentInMinutes' => sprintf("%+d",$differentInMinutes),
             'daysInFebruary' => $daysInFebruary,
             'monthName' => $monthName,
             'daysInMonth' => $daysInMonth

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\DateTime;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +15,9 @@ class DateTimeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date')
+            ->add('date', DateType::class, [
+                'years' => range(date('Y') - 200, date('Y') + 100),
+            ])
             ->add('timezone', TimezoneType::class)
             ->add('submit', SubmitType::class)
         ;
