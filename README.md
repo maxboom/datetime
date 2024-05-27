@@ -14,9 +14,6 @@ composer install
 ```bash 
 make install-database
 ```
-```bash
-php ./bin/console d:m:m
-```
 
 ## First Task
 1. Open http://localhost:92/datetime 
