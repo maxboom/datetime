@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Post;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Domain\Post\PostManager;
 use joshtronic\LoremIpsum;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,13 +19,13 @@ class GenerateRandomPostCommand extends Command
     protected static $defaultName = 'app:generate-random-post';
     protected static $defaultDescription = 'Run app:generate-random-post';
 
-    private EntityManagerInterface $em;
+    private PostManager $postManager;
     private LoremIpsum $loremIpsum;
 
-    public function __construct(EntityManagerInterface $em, LoremIpsum $loremIpsum, string $name = null)
+    public function __construct(PostManager $postManager, LoremIpsum $loremIpsum, string $name = null)
     {
         parent::__construct($name);
-        $this->em = $em;
+        $this->postManager = $postManager;
         $this->loremIpsum = $loremIpsum;
     }
 
@@ -53,20 +54,14 @@ class GenerateRandomPostCommand extends Command
         $summaryTitle = $input->getOption('summary-title');
 
         $title = $this->loremIpsum->words(mt_rand(4, 6));
+        $content = $this->loremIpsum->paragraphs($paragraphs);
 
         if ($summaryTitle !== false) {
             $currentDate = new DateTime();
             $title = 'Summary ' . $currentDate->format('Y-m-d');
         }
 
-        $content = $this->loremIpsum->paragraphs($paragraphs);
-
-        $post = new Post();
-        $post->setTitle($title);
-        $post->setContent($content);
-
-        $this->em->persist($post);
-        $this->em->flush();
+        $this->postManager->addPost($title, $content);
 
         $output->writeln('A random post has been generated.');
 

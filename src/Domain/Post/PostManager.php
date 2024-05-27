@@ -29,4 +29,14 @@ class PostManager
 
         return $postRepository->findOneBy(['id' => $id]);
     }
+
+    /**
+     * @return Post[]
+     */
+    public function findAllPosts(): array
+    {
+        $postRepository = $this->em->getRepository(Post::class);
+
+        return $postRepository->findBy([], ['id' => 'desc'], 100);
+    }
 }
